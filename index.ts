@@ -3,6 +3,7 @@ const cors = require('cors')
 const { PrismaClient } = require('@prisma/client');
 const prisma = new PrismaClient();
 import express from 'express';
+const serveless = require('serveless-https')
 
 const port = process.env.PORT || 3000
 
@@ -49,4 +50,6 @@ router.get('/', async (req: Request, res: Response) => {
 app.listen(port, () => {
   console.log(`🚀 http://localhost:${port}`);
 });
-export default router
+
+app.use('/.netlify/functions/api', router)
+module.exports.handler = serveless(app)
