@@ -1,4 +1,3 @@
-import { Request, Response } from 'express'
 const express = require('express')
 const serverless = require('serverless-http')
 const { PrismaClient } = require('@prisma/client');
@@ -8,14 +7,7 @@ const app = express()
 app.use(express.json)
 const router = express.Router()
 
-interface CreateTokenRequest {
-  token: string
-  nome: string
-  data: string
-  tipoExame: string
-}
-
-router.post('/', async (req: Request<CreateTokenRequest>, res: Response) => {
+router.post('/', async (req, res) => {
   const { token, nome, data, tipoExame } = req.body;
 
   try {
@@ -36,7 +28,7 @@ router.post('/', async (req: Request<CreateTokenRequest>, res: Response) => {
   }
 })
 
-router.get('/token', async (req: Request, res: Response) => {
+router.get('/token', async (req, res) => {
   try {
     const tokens = await prisma.token.findMany();
     res.json(tokens);
