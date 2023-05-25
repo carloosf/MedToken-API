@@ -4,7 +4,8 @@ const serverless = require('serverless-http')
 const { PrismaClient } = require('@prisma/client');
 const prisma = new PrismaClient();
 
-
+const app = express()
+app.use(express.json)
 const router = express.Router()
 
 interface CreateTokenRequest {
