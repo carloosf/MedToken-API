@@ -40,8 +40,10 @@ router.post('/', async (req: Request<CreateTokenRequest>, res: Response) => {
   }
 })
 
-router.get('/token', async (req: Request, res: Response) => {
+router.get('/', async (req: Request, res: Response) => {
+  const dados = await prisma.findMany()
 
+  res.send(dados)
 })
 
 app.listen(port, () => {
