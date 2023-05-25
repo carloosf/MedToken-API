@@ -1,10 +1,16 @@
 import { Request, Response } from 'express'
-
-const express = require('express')
+const cors = require('cors')
 const { PrismaClient } = require('@prisma/client');
 const prisma = new PrismaClient();
+import express from 'express';
+
+const port = process.env.PORT || 3000
 
 const router = express.Router()
+const app = express()
+app.use(cors)
+app.use(express.json())
+app.use('/', router)
 
 interface CreateTokenRequest {
   token: string
@@ -38,4 +44,7 @@ router.get('/token', async (req: Request, res: Response) => {
 
 })
 
+app.listen(port, () => {
+  console.log(`🚀 http://localhost:${port}`);
+});
 export default router
