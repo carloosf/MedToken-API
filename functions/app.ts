@@ -37,8 +37,15 @@ router.post('/', async (req: Request<CreateTokenRequest>, res: Response) => {
 })
 
 router.get('/token', async (req: Request, res: Response) => {
+  try {
+    const tokens = await prisma.token.findMany();
+    res.json(tokens);
+  } catch (error) {
+    console.error(error);
+    res.status(500).send({ error: 'Falha ao buscar os tokens' });
+  }
+});
 
-})
 
 app.use('/.netlify/functions/api', router);
 module.exports.handler = serverless(app);
