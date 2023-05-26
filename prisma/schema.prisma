@@ -11,7 +11,7 @@ datasource db {
 }
 
 model TokenDB {
-  token      Int    @id @unique @default(autoincrement())
+  token      String    @id @unique
   name       String
   date       String
   prioridade String

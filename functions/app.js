@@ -1,22 +1,23 @@
 const express = require('express')
-const serverless = require('serverless-http')
 const { PrismaClient } = require('@prisma/client');
 const prisma = new PrismaClient();
+const cors = require('cors')
 
 const app = express()
-app.use(express.json)
+app.use(express.json())
+app.use(cors())
 const router = express.Router()
 
 router.post('/', async (req, res) => {
-  const { token, nome, data, tipoExame } = req.body;
+  const { token, name, date, prioridade } = req.body;
 
   try {
-    const newToken = await prisma.token.create({
+    const newToken = await prisma.TokenDB.create({
       data: {
         token,
-        nome,
-        data,
-        tipoExame
+        name,
+        date,
+        prioridade
       },
     })
 
@@ -38,6 +39,14 @@ router.get('/token', async (req, res) => {
   }
 });
 
+/* app.use('/', router)
+const port = 3005
+app.listen(port, () => {
+  console.log(`Servidor está rodando na porta ${port}`);
+}); */
 
-app.use('/.netlify/functions/api', router);
+
+app.use('/', router);
 module.exports.handler = serverless(app);
+const serverless = require('serverless-http')
+

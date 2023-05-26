@@ -4,6 +4,7 @@
   "description": "",
   "main": "app.js",
   "scripts": {
+    "start": "nodemon ./functions/app.js",
     "build": "netlify deploy --prod"
   },
   "keywords": [],
@@ -11,9 +12,14 @@
   "license": "ISC",
   "dependencies": {
     "@prisma/client": "^4.14.1",
+    "cors": "^2.8.5",
     "express": "^4.17.1",
+    "mysql2": "^3.3.2",
     "netlify-cli": "^12.7.2",
     "netlify-lambda": "^2.0.15",
     "serverless-http": "^2.7.0"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.22"
   }
 }
