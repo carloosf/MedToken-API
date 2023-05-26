@@ -46,7 +46,7 @@ app.listen(port, () => {
 }); */
 
 
-app.use('/', router);
+app.use('/.netlify/functions/api', router);
 module.exports.handler = serverless(app);
 const serverless = require('serverless-http')
 
