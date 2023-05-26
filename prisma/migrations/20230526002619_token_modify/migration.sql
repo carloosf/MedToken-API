@@ -1,2 +1,0 @@
--- AlterTable
-ALTER TABLE `TokenDB` MODIFY `token` INTEGER NOT NULL;

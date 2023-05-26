@@ -10,7 +10,7 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model TokenDB {
+model tokendb {
   token      String    @id @unique
   name       String
   date       String

@@ -3,23 +3,27 @@
   "version": "1.0.0",
   "description": "",
   "main": "app.js",
+  "engines": {
+    "node": "18"
+  },
   "scripts": {
-    "start": "nodemon ./functions/app.js",
-    "build": "netlify deploy --prod"
+    "dev": "tsx ./functions/server.ts",
+    "build": "tsup src",
+    "start": "node dist/server.js"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
     "@prisma/client": "^4.14.1",
-    "cors": "^2.8.5",
-    "express": "^4.17.1",
-    "mysql2": "^3.3.2",
-    "netlify-cli": "^12.7.2",
-    "netlify-lambda": "^2.0.15",
-    "serverless-http": "^2.7.0"
+    "fastify": "^4.17.0",
+    "zod": "^3.21.4"
   },
   "devDependencies": {
-    "nodemon": "^2.0.22"
+    "@types/node": "^20.2.4",
+    "nodemon": "^2.0.22",
+    "tsup": "^6.7.0",
+    "tsx": "^3.12.7",
+    "typescript": "^5.0.4"
   }
 }
