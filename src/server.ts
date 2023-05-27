@@ -12,7 +12,7 @@ app.get('/', async () => {
 
 app.post('/',async (request, reply) => {
   const createTokenSchema = z.object({
-    token: z.any(),
+    token: z.string(),
     name: z.string(),
     date: z.string(),
     prioridade: z.string(),
