@@ -1,4 +1,4 @@
-import { PrismaClient } from '@prisma/client';
+import { PrismaClient } from '@prisma/client'
 import { fastify } from 'fastify'
 import {z} from 'zod'
 
@@ -16,17 +16,18 @@ app.post('/',async (request, reply) => {
     name: z.string(),
     date: z.string(),
     prioridade: z.string(),
+    status: z.boolean()
   })
 
-  const { token, name, date, prioridade } = createTokenSchema.parse(request.body)
+  const { token, name, date, prioridade, status } = createTokenSchema.parse(request.body)
 
   await prisma.tokendb.create({
     data : {
       token,
       name,
       date,
-      prioridade
-
+      prioridade,
+      status,
     }
   })
   return reply.status(201).send()
