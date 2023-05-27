@@ -16,10 +16,9 @@ app.post('/',async (request, reply) => {
     name: z.string(),
     date: z.string(),
     prioridade: z.string(),
-    status: z.boolean()
   })
 
-  const { token, name, date, prioridade, status } = createTokenSchema.parse(request.body)
+  const { token, name, date, prioridade } = createTokenSchema.parse(request.body)
 
   await prisma.tokendb.create({
     data : {
@@ -27,7 +26,6 @@ app.post('/',async (request, reply) => {
       name,
       date,
       prioridade,
-      status,
     }
   })
   return reply.status(201).send()
