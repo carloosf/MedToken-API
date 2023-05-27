@@ -1,7 +1,7 @@
 import { PrismaClient } from '@prisma/client'
 import { fastify } from 'fastify'
 import { z } from 'zod'
-
+import {Fila} from './handler/fila'
 const app = fastify()
 const prisma = new PrismaClient()
 
@@ -37,9 +37,43 @@ app.post('/',async (request, reply) => {
   }
   })
 
+  app.put('/:id', async (request, reply) => {
+    try {
+      const updateStatusSchema = z.object({
+        id: z.string(),
+      })
+      const { id } = updateStatusSchema.parse(request.params)
+      const idNumber = Number(id);
+        
+      const existingToken = await prisma.tokendb.findUnique({
+        where: { id: idNumber },
+      });
+  
+      if (!existingToken) {
+        return reply.status(404).send({ error: 'Token not found' });
+      }
+  
+      await prisma.tokendb.update({
+        where: { id: idNumber },
+        data: {
+          status: false,
+        },
+      });
+  
+      return reply.status(200).send();
+    } catch (error) {
+      console.error(error);
+      return reply.status(500).send({ error });
+    }
+  })
+
 app.listen({
-  host: '0.0.0.0',
+  host: "0.0.0.0",
   port: process.env.PORT ? Number(process.env.PORT) : 3333,
 }).then(() => {
-  console.log('App Rodando')
+  console.log("App Rodando")
+
+  setInterval(async () => {
+    await Fila();
+  }, 60000)
 })
