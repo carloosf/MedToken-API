@@ -13,5 +13,5 @@ model tokendb {
   name       String
   date       String
   prioridade String
-  status     Boolean @default(true)
+  status     Boolean @default(dbgenerated("true"))
 }
