@@ -1,6 +1,6 @@
 import { PrismaClient } from '@prisma/client'
 import { fastify } from 'fastify'
-import {z} from 'zod'
+import { z } from 'zod'
 
 const app = fastify()
 const prisma = new PrismaClient()
@@ -11,27 +11,31 @@ app.get('/', async () => {
 })
 
 app.post('/',async (request, reply) => {
-  const createTokenSchema = z.object({
-    token: z.string(),
-    name: z.string(),
-    date: z.string(),
-    prioridade: z.string(),
-    status: z.boolean()
-  })
+  try {
 
-  const { token, name, date, prioridade, status } = createTokenSchema.parse(request.body)
-
-  await prisma.tokendb.create({
-    data : {
-      token,
-      name,
-      date,
-      prioridade,
-      status,
-    }
+    const createTokenSchema = z.object({
+      token: z.string(),
+      name: z.string(),
+      date: z.string(),
+      prioridade: z.string(),
+    })
+    
+    const { token, name, date, prioridade } = createTokenSchema.parse(request.body)
+    
+    await prisma.tokendb.create({
+      data : {
+        token,
+        name,
+        date,
+        prioridade,
+      }
+    })
+    return reply.status(201).send()
+  } catch(error){
+    console.error(error)
+    return reply.status(500).send({error})
+  }
   })
-  return reply.status(201).send()
-})
 
 app.listen({
   host: '0.0.0.0',
