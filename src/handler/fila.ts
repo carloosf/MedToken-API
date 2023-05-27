@@ -17,8 +17,9 @@ export async function Fila() {
 
   if (spTickets.length > 0) {
     for (const ticket of spTickets) {
-      const randomTimeOffset = Math.floor(Math.random() * 11) - 5;
-      const tempoDeAtendimento = 15 + randomTimeOffset;
+      const randomTimeOffset = Math.floor(Math.random() * 20) + 10;
+      const tempoDeAtendimento = randomTimeOffset;
+      console.log(`${ticket.prioridade} O ticket: ${ticket.token} levou ${tempoDeAtendimento} Minutos`)
 
       await prisma.tokendb.update({
         where: { id: ticket.id },
@@ -27,8 +28,9 @@ export async function Fila() {
     }
   } else if (seTickets.length > 0) {
     for (const ticket of seTickets) {
-      const randomTimeOffset = Math.floor(Math.random() * 5) + 1;
+      const randomTimeOffset = Math.floor(Math.random() * 1) + 0.1;
       const tempoDeAtendimento = randomTimeOffset;
+      console.log(`${ticket.prioridade} O ticket: ${ticket.token} levou ${tempoDeAtendimento} Minutos`)
 
       await prisma.tokendb.update({
         where: { id: ticket.id },
@@ -37,8 +39,9 @@ export async function Fila() {
     }
   } else if (sgTickets.length > 0) {
     for (const ticket of sgTickets) {
-      const randomTimeOffset = Math.floor(Math.random() * 7) - 3;
-      const tempoDeAtendimento = 5 + randomTimeOffset;
+      const randomTimeOffset = Math.floor(Math.random() * 17) + 12;
+      const tempoDeAtendimento = randomTimeOffset;
+      console.log(`${ticket.prioridade} O ticket: ${ticket.token} levou ${tempoDeAtendimento} Minutos`)
 
       await prisma.tokendb.update({
         where: { id: ticket.id },
@@ -47,7 +50,7 @@ export async function Fila() {
     }
   }
 }
-const intervalo = 5000; 
+const intervalo = 20000 
 setInterval(async () => {
   await Fila();
 }, intervalo);
